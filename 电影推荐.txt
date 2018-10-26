@@ -1,6 +1,6 @@
 # coding = utf-8
 	
-	# »ùÓÚÓÃ»§µÄĞ­Í¬¹ıÂËÍÆ¼öËã·¨ÊµÏÖ
+	# åŸºäºç”¨æˆ·çš„ååŒè¿‡æ»¤æ¨èç®—æ³•å®ç°
 	import random
 	
 	import math
@@ -8,17 +8,17 @@
 	
 	
 	class UserBasedCF():
-	# ³õÊ¼»¯Ïà¹Ø²ÎÊı
+	# åˆå§‹åŒ–ç›¸å…³å‚æ•°
 	def __init__(self):
-	# ÕÒµ½ÓëÄ¿±êÓÃ»§ĞËÈ¤ÏàËÆµÄ20¸öÓÃ»§£¬ÎªÆäÍÆ¼ö10²¿µçÓ°
+	# æ‰¾åˆ°ä¸ç›®æ ‡ç”¨æˆ·å…´è¶£ç›¸ä¼¼çš„20ä¸ªç”¨æˆ·ï¼Œä¸ºå…¶æ¨è10éƒ¨ç”µå½±
 	self.n_sim_user = 20
 	self.n_rec_movie = 10
 	
-	# ½«Êı¾İ¼¯»®·ÖÎªÑµÁ·¼¯ºÍ²âÊÔ¼¯
+	# å°†æ•°æ®é›†åˆ’åˆ†ä¸ºè®­ç»ƒé›†å’Œæµ‹è¯•é›†
 	self.trainSet = {}
 	self.testSet = {}
 	
-	# ÓÃ»§ÏàËÆ¶È¾ØÕó
+	# ç”¨æˆ·ç›¸ä¼¼åº¦çŸ©é˜µ
 	self.user_sim_matrix = {}
 	self.movie_count = 0
 	
@@ -26,7 +26,7 @@
 	print('Recommneded movie number = %d' % self.n_rec_movie)
 	
 	
-	# ¶ÁÎÄ¼şµÃµ½¡°ÓÃ»§-µçÓ°¡±Êı¾İ
+	# è¯»æ–‡ä»¶å¾—åˆ°â€œç”¨æˆ·-ç”µå½±â€æ•°æ®
 	def get_dataset(self, filename, pivot=0.75):
 	trainSet_len = 0
 	testSet_len = 0
@@ -45,19 +45,19 @@
 	print('TestSet = %s' % testSet_len)
 	
 	
-	# ¶ÁÎÄ¼ş£¬·µ»ØÎÄ¼şµÄÃ¿Ò»ĞĞ
+	# è¯»æ–‡ä»¶ï¼Œè¿”å›æ–‡ä»¶çš„æ¯ä¸€è¡Œ
 	def load_file(self, filename):
 	with open(filename, 'r') as f:
 	for i, line in enumerate(f):
-	if i == 0: # È¥µôÎÄ¼şµÚÒ»ĞĞµÄtitle
+	if i == 0: # å»æ‰æ–‡ä»¶ç¬¬ä¸€è¡Œçš„title
 	continue
 	yield line.strip('\r\n')
 	print('Load %s success!' % filename)
 	
 	
-	# ¼ÆËãÓÃ»§Ö®¼äµÄÏàËÆ¶È
+	# è®¡ç®—ç”¨æˆ·ä¹‹é—´çš„ç›¸ä¼¼åº¦
 	def calc_user_sim(self):
-	# ¹¹½¨¡°µçÓ°-ÓÃ»§¡±µ¹ÅÅË÷Òı
+	# æ„å»ºâ€œç”µå½±-ç”¨æˆ·â€å€’æ’ç´¢å¼•
 	# key = movieID, value = list of userIDs who have seen this movie
 	print('Building movie-user table ...')
 	movie_user = {}
@@ -82,7 +82,7 @@
 	self.user_sim_matrix[u][v] += 1
 	print('Build user co-rated movies matrix success!')
 	
-	# ¼ÆËãÏàËÆĞÔ
+	# è®¡ç®—ç›¸ä¼¼æ€§
 	print('Calculating user similarity matrix ...')
 	for u, related_users in self.user_sim_matrix.items():
 	for v, count in related_users.items():
@@ -90,7 +90,7 @@
 	print('Calculate user similarity matrix success!')
 	
 	
-	# Õë¶ÔÄ¿±êÓÃ»§U£¬ÕÒµ½Æä×îÏàËÆµÄK¸öÓÃ»§£¬²úÉúN¸öÍÆ¼ö
+	# é’ˆå¯¹ç›®æ ‡ç”¨æˆ·Uï¼Œæ‰¾åˆ°å…¶æœ€ç›¸ä¼¼çš„Kä¸ªç”¨æˆ·ï¼Œäº§ç”ŸNä¸ªæ¨è
 	def recommend(self, user):
 	K = self.n_sim_user
 	N = self.n_rec_movie
@@ -107,15 +107,15 @@
 	return sorted(rank.items(), key=itemgetter(1), reverse=True)[0:N]
 	
 	
-	# ²úÉúÍÆ¼ö²¢Í¨¹ı×¼È·ÂÊ¡¢ÕÙ»ØÂÊºÍ¸²¸ÇÂÊ½øĞĞÆÀ¹À
+	# äº§ç”Ÿæ¨èå¹¶é€šè¿‡å‡†ç¡®ç‡ã€å¬å›ç‡å’Œè¦†ç›–ç‡è¿›è¡Œè¯„ä¼°
 	def evaluate(self):
 	print("Evaluation start ...")
 	N = self.n_rec_movie
-	# ×¼È·ÂÊºÍÕÙ»ØÂÊ
+	# å‡†ç¡®ç‡å’Œå¬å›ç‡
 	hit = 0
 	rec_count = 0
 	test_count = 0
-	# ¸²¸ÇÂÊ
+	# è¦†ç›–ç‡
 	all_rec_movies = set()
 	
 	for i, user, in enumerate(self.trainSet):
@@ -135,7 +135,7 @@
 	
 	
 	if __name__ == '__main__':
-	rating_file = 'D:\\Ñ§Ï°×ÊÁÏ\\ÍÆ¼öÏµÍ³\\ml-latest-small\\ratings.csv'
+	rating_file = 'D:\\å­¦ä¹ èµ„æ–™\\æ¨èç³»ç»Ÿ\\ml-latest-small\\ratings.csv'
 	userCF = UserBasedCF()
 	userCF.get_dataset(rating_file)
 	userCF.calc_user_sim()
